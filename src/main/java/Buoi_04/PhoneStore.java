@@ -1,4 +1,6 @@
-package Buoi_03.Bai_4;
+package Buoi_04;
+
+import com.sun.source.tree.WhileLoopTree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,10 +139,60 @@ public class PhoneStore {
         for (int i = 0; i < phones.size() - 1; i++) {
             if (phones.get(i).price > phones.get(i + 1).price) {
                 Phone temp = phones.get(i);
-                phones.set(i, phones.get(i+1));
-                phones.set(i,temp);
+                phones.set(i, phones.get(i + 1));
+                phones.set(i, temp);
             }
         }
+    }
+
+    public void sortNew() {
+        for (int i = 0; i < phones.size(); i++) {
+            if (ktPhone(i) == 2) {
+                continue;
+            }
+            System.out.println(phones.get(i));
+        }
+    }
+
+    public void sortOld() {
+        for (int i = 0; i < phones.size(); i++) {
+            if (ktPhone(i) == 1) {
+                continue;
+            }
+            System.out.println(phones.get(i));
+        }
+    }
+
+    public void searchByPrice(Scanner sc) {
+        double beginPrice;
+        double endPrice;
+        beginPrice = Phone.readDouble(sc, "Nhập giá bắt đầu:", Double.MIN_VALUE);
+        do {
+            endPrice = Phone.readDouble(sc, "Nhập giá kết thúc:", Double.MIN_VALUE);
+            if (endPrice > beginPrice) {
+                System.out.println("Giá kết thúc không thể nhỏ hơn giá bắt đầu! Mời nhập lại");
+            }
+        } while (endPrice <= beginPrice);
+        System.out.printf("=== Các điện thoại có giá từ %f tới %f ===\n", beginPrice, endPrice);
+        for (Phone p : phones) {
+            if (p.price > beginPrice && p.price < endPrice) {
+                System.out.println(p);
+            }
+        }
+    }
+
+    public void searchByName(Scanner sc) {
+        String input;
+        input = Phone.readLine(sc, "Nhập tên điện thoại cần tìm: ");
+        boolean found =  false;
+        for (Phone p : phones) {
+            if (p.name.toLowerCase().contains(input.toLowerCase())) {
+                System.out.println(p);
+                found = true;
+            }
+        }
+        if(!found)
+            System.out.println("Không có điện thoại khớp!");
     }
 
     private String nextOldId() {
@@ -173,4 +225,12 @@ public class PhoneStore {
         return null;
     }
 
+    private int ktPhone(int index) {
+        if (phones.get(index) instanceof NewPhone) {
+            return 1;
+        } else if (phones.get(index) instanceof OldPhone) {
+            return 2;
+        }
+        return 0;
+    }
 }

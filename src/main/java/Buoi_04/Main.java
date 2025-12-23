@@ -1,4 +1,4 @@
-package Buoi_03.Bai_4;
+package Buoi_04;
 
 import java.util.Scanner;
 
@@ -33,6 +33,10 @@ public class Main {
                     System.out.println("Xắp xếp giá: ");
                     store.sortPrice();
                     store.showAll();
+                    break;
+                case 6:
+                    menuSearch(sc, store);
+                    break;
                 case 9: {
                     System.out.println("Thoát chương trình!");
                     sc.close();
@@ -105,4 +109,55 @@ public class Main {
             System.out.println();
         }
     }
+
+    /// Menu tìm kiếm
+    private static void menuSearch(Scanner sc, PhoneStore phoneStore){
+        while (true){
+            System.out.println("=== Tìm kiếm ===");
+            System.out.println("1. Tìm theo loại điện thoại");
+            System.out.println("2. Tìm theo mức giá");
+            System.out.println("3. Tìm theo tên");
+            System.out.println("4. Quay lại");
+            int chon = Phone.readInt(sc, "Nhập lựa chọn: ", 1, 4);
+            switch (chon){
+                case 1:
+                    menuFilterNewAndOld(sc,phoneStore);
+                    break;
+                case 2:
+                    phoneStore.searchByPrice(sc);
+                    break;
+                case 3:
+                    phoneStore.searchByName(sc);
+                    break;
+                case 4:
+                    return;
+            }
+            System.out.println();
+        }
+    }
+
+    /// Menu lọc  theo loại
+    private static void menuFilterNewAndOld(Scanner sc, PhoneStore phoneStore){
+        while(true){
+            System.out.println("=== Lọc theo loại điện thoại ===");
+            System.out.println("1. Điện thoại  mới");
+            System.out.println("2. Điện thoại cũ");
+            System.out.println("3. Quay về");
+            int chon = Phone.readInt(sc, "Nhập lựa chọn: ", 1, 3);
+            switch (chon){
+                case 1:
+                    phoneStore.sortNew();
+                    break;
+                case 2:
+                    phoneStore.sortOld();
+                    break;
+                case 3:
+                    return;
+            }
+            System.out.println();
+        }
+
+    }
+
+
 }
