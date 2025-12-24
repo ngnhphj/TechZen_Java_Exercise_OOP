@@ -1,6 +1,4 @@
-package Buoi_04;
-
-import com.sun.source.tree.WhileLoopTree;
+package Buoi_05;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +9,7 @@ public class PhoneStore {
     private final List<Phone> phones = new ArrayList<>();
     private int oldCounter = 1;
     private int newCounter = 1;
+    static double totalPhonePrice;
 
     public PhoneStore() {
         phones.add(new OldPhone("DTC001", "iPhone 11 64GB", 6500000, 3, "Apple", 85, "Máy đẹp, ít trầy"));
@@ -36,7 +35,10 @@ public class PhoneStore {
             System.out.println("Danh sách rỗng");
             return;
         }
-        for (Phone p : phones) System.out.println(p);
+        for (Phone p : phones) {
+            if(p instanceof OldPhone)
+                System.out.println(p);
+        }
     }
 
     public void showNew() {
@@ -45,7 +47,10 @@ public class PhoneStore {
             System.out.println("Danh sách rỗng");
             return;
         }
-        for (Phone p : phones) System.out.println(p);
+        for (Phone p : phones) {
+            if(p instanceof NewPhone)
+                System.out.println(p);
+        }
     }
 
     public void addOldPhone(Scanner sc) {
@@ -63,9 +68,21 @@ public class PhoneStore {
         Phone p = new NewPhone();
         p.setId(id);
         p.input(sc);
+        boolean found = false;
+        for(Phone phone : phones ){
+            if(phone instanceof NewPhone)
+            {
+                if(phone.name.trim().equalsIgnoreCase(p.name.trim())){
+                    found = true;
+                    System.out.println("Tên điện thoại đã có sẵn trong kho!");
+                }
+            }
+        }
 //        Phones.add(p);
-        phones.add(p);
-        System.out.println("Thêm điện thoại mới thành công! ID=" + id);
+        if(!found){
+            phones.add(p);
+            System.out.println("Thêm điện thoại mới thành công! ID=" + id);
+        }
     }
 
     public void updateById(String id, Scanner sc) {
@@ -164,7 +181,7 @@ public class PhoneStore {
         beginPrice = Phone.readDouble(sc, "Nhập giá bắt đầu:", Double.MIN_VALUE);
         do {
             endPrice = Phone.readDouble(sc, "Nhập giá kết thúc:", Double.MIN_VALUE);
-            if (endPrice > beginPrice) {
+            if (endPrice < beginPrice) {
                 System.out.println("Giá kết thúc không thể nhỏ hơn giá bắt đầu! Mời nhập lại");
             }
         } while (endPrice <= beginPrice);
@@ -188,6 +205,21 @@ public class PhoneStore {
         }
         if(!found)
             System.out.println("Không có điện thoại khớp!");
+    }
+
+    public double calculateTotalPhonePrice(){
+        for(Phone p : phones){
+            totalPhonePrice += p.calculatePhonePrice();
+        }
+        return totalPhonePrice;
+    }
+
+    public void saleOffOldPhones(double phanTram){
+        for(Phone p : phones){
+            if(p instanceof OldPhone){
+                ((OldPhone) p).khuyenMai(phanTram);
+            }
+        }
     }
 
     private String nextOldId() {

@@ -1,4 +1,4 @@
-package Buoi_04;
+package Buoi_05;
 
 import java.util.Scanner;
 
@@ -10,6 +10,10 @@ public class NewPhone extends Phone {
 
     public NewPhone(String id, String name, double price, int warrantyMonths, String brand, int quantity) {
         super(id, name, price, warrantyMonths, brand);
+        this.quantity = quantity;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -41,6 +45,5 @@ public class NewPhone extends Phone {
     public String toString() {
         return super.toString() + ", SL=" + quantity;
     }
-
 
 }
