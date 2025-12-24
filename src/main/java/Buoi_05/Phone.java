@@ -1,4 +1,4 @@
-package Buoi_04;
+package Buoi_05;
 
 import java.util.Scanner;
 
@@ -34,6 +34,10 @@ public abstract class Phone {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     protected void inputCommon(Scanner sc) {

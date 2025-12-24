@@ -1,8 +1,8 @@
-package Buoi_04;
+package Buoi_05;
 
 import java.util.Scanner;
 
-public class OldPhone extends Phone {
+public class OldPhone extends Phone implements KhuyenMai {
     private int batteryPercent;
     private String description;
 
@@ -53,5 +53,10 @@ public class OldPhone extends Phone {
     @Override
     public String toString() {
         return super.toString() + ", Pin=" + batteryPercent + "%, Mô tả=" + description;
+    }
+
+    @Override
+    public void khuyenMai(double phanTram) {
+        setPrice(this.price * (1 - phanTram / 100));
     }
 }
