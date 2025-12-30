@@ -108,4 +108,12 @@ public class MyArrayList {
         }
         return false;
     }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
 }
