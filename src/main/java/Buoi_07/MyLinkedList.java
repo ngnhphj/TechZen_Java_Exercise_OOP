@@ -58,36 +58,35 @@ public class MyLinkedList {
     }
 
     public Integer removeFirst() {
+        if (head == null) return null;
         int removeValue = head.value;
         if (head == tail) {
-            return null;
+            head = tail = null;
         } else {
             head = head.next;
-            size -= 1;
         }
+        size--;
         return removeValue;
     }
 
     public Integer removeLast() {
-        int removeValue;
-        if (head == null) {
-            return null;
-        } else if (head == tail) {
-            removeValue = head.value;
-            head = null;
+        if (head == null) return null;
+        int removeValue = tail.value;
+        if (head == tail) {
+            head = tail = null;
+            size--;
             return removeValue;
-        } else {
-            removeValue = tail.value;
-            Node temp = head;
-            while (temp.next != tail) {
-                temp = temp.next;
-            }
-            tail = temp;
-            tail.next = null;
-            size -= 1;
         }
+        Node temp = head;
+        while (temp.next != tail) {
+            temp = temp.next;
+        }
+        tail = temp;
+        tail.next = null;
+        size--;
         return removeValue;
     }
+
 
     public Integer remove(int index) {
         int removeValue = 0;
@@ -146,26 +145,27 @@ public class MyLinkedList {
     }
 
     public Integer set(int index, int element) {
-        if (head == null) {
-            return null;
-        }
-        if (index < 1 || index > size) {
-            System.out.println("Index is out of size!");
-            return null;
-        }
+        if (index < 1 || index > size || head == null) return null;
         Integer oldValue = get(index);
         if (index == 1) {
-            removeFirst();
-            addFirst(element);
-        } else if (index == size) {
-            removeLast();
-            addLast(element);
-        } else {
-            remove(index);
-            add(index - 1, element);
+            Node newHead = new Node(element);
+            newHead.next = head.next;
+            head = newHead;
+            if (size == 1) tail = head;
+            return oldValue;
         }
+        Node prev = head;
+        for (int i = 1; i < index - 1; i++) {
+            prev = prev.next;
+        }
+        Node target = prev.next;
+        Node newNode = new Node(element);
+        newNode.next = target.next;
+        prev.next = newNode;
+        if (index == size) tail = newNode;
         return oldValue;
     }
+
 
     public int indexOf(int element) {
         if (head == null) return -1;
@@ -195,6 +195,14 @@ public class MyLinkedList {
             index++;
         }
         return result;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
 
