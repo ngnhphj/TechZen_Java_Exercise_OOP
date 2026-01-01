@@ -1,11 +1,11 @@
 package Buoi_07;
 
-public class MyLinkedList {
-    private static class Node {
-        private final int value;
+public class MyLinkedList<E> {
+    private class Node {
+        private final E value;
         private Node next;
 
-        private Node(int value) {
+        private Node(E value) {
             this.value = value;
         }
     }
@@ -14,7 +14,7 @@ public class MyLinkedList {
     private Node tail = null;
     private int size;
 
-    public void addFirst(int value) {
+    public void addFirst(E value) {
         Node newNode = new Node(value);
         if (head == null) {
             head = newNode;
@@ -26,7 +26,7 @@ public class MyLinkedList {
         size += 1;
     }
 
-    public void addLast(int value) {
+    public void addLast(E value) {
         Node newNode = new Node(value);
         if (head == null) {
             addFirst(value);
@@ -38,7 +38,7 @@ public class MyLinkedList {
         }
     }
 
-    public void add(int index, int value) {
+    public void add(int index, E value) {
         Node temp = head;
         Node newNode = new Node(value);
         if (head == null) {
@@ -59,7 +59,7 @@ public class MyLinkedList {
 
     public Integer removeFirst() {
         if (head == null) return null;
-        int removeValue = head.value;
+        int removeValue = (int) head.value;
         if (head == tail) {
             head = tail = null;
         } else {
@@ -71,7 +71,7 @@ public class MyLinkedList {
 
     public Integer removeLast() {
         if (head == null) return null;
-        int removeValue = tail.value;
+        int removeValue = (int) tail.value;
         if (head == tail) {
             head = tail = null;
             size--;
@@ -101,7 +101,7 @@ public class MyLinkedList {
             for (int i = 1; i < index - 1; i++) {
                 temp = temp.next;
             }
-            removeValue = temp.next.value;
+            removeValue = (int) temp.next.value;
             temp.next = temp.next.next;
             size -= 1;
         }
@@ -112,7 +112,7 @@ public class MyLinkedList {
         if (head == null) {
             return null;
         } else {
-            return head.value;
+            return (Integer) head.value;
         }
     }
 
@@ -120,9 +120,9 @@ public class MyLinkedList {
         if (head == null) {
             return null;
         } else if (head == tail) {
-            return head.value;
+            return (Integer) head.value;
         } else {
-            return tail.value;
+            return (Integer) tail.value;
         }
     }
 
@@ -139,12 +139,12 @@ public class MyLinkedList {
             for (int i = 1; i < index; i++) {
                 temp = temp.next;
             }
-            result = temp.value;
+            result = (int) temp.value;
         }
         return result;
     }
 
-    public Integer set(int index, int element) {
+    public Integer set(int index, E element) {
         if (index < 1 || index > size || head == null) return null;
         Integer oldValue = get(index);
         if (index == 1) {
@@ -172,7 +172,8 @@ public class MyLinkedList {
         Node temp = head;
         int index = 1;
         while (temp != null) {
-            if (temp.value == element) {
+            int cur = (int) temp.value;
+            if (cur == element) {
                 return index;
             }
             temp = temp.next;
@@ -186,9 +187,9 @@ public class MyLinkedList {
         int result = -1;
         Node temp = head;
         int index = 1;
-
+        int cur = (int) temp.value;
         while (temp != null) {
-            if (temp.value == element) {
+            if (cur == element) {
                 result = index;
             }
             temp = temp.next;
